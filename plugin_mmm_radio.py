@@ -27,6 +27,7 @@ def start(core:VACore):
             ],
             "radioPlay": 0,
             "radioVolume": 100,
+            "TimeSleep": 1800,
             # "radioIpcSocket": "/tmp/mpvsocket",
         },
 
@@ -174,8 +175,9 @@ def RadioVolumeChange(core:VACore, phrase: str, level:int):
 def RadioTimerSleep(core:VACore, phrase: str):
     # print("Выключить радио через 30 минут")
     global TimerSleep
+    options = core.plugin_options(modname)
     TimerSleep = True
     core.play_voice_assistant_speech("выключу радио попозже")
-    core.set_timer(15,(RadioStop, phrase))
+    core.set_timer(options["TimeSleep"],(TimeSleep, phrase))
 
     
