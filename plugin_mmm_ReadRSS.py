@@ -1,5 +1,3 @@
-# Рандом
-# author: Vladislav Janvarev
 import os
 from vacore import VACore
 modname = os.path.basename(__file__)[:-3] # calculating modname
