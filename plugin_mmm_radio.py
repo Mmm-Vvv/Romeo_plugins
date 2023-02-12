@@ -12,7 +12,6 @@ modname = os.path.basename(__file__)[:-3] # calculating modname
 
 TimerSleep = False
 
-
 # функция на старте
 def start(core:VACore):
     manifest = { # возвращаем настройки плагина - словарь
@@ -29,7 +28,6 @@ def start(core:VACore):
             "radioVolume": 100,
             "TimeSleep": 1800,  # по команде "Спать": через сколько секунд выключить радио.
             "TimesToReduce": 2, # по команде "Спать": во сколько раз уменьшить громкость, 1 - не уменьшать. 
-            # "radioIpcSocket": "/tmp/mpvsocket",
         },
 
         "commands": { # набор скиллов. Фразы скилла разделены | . Если найдены - вызывается функция
@@ -56,9 +54,7 @@ def RadioPlay(core:VACore, phrase: str): # в phrase находится оста
                                               # в этом плагине не используется
     options = core.plugin_options(modname)
     global player
-    # global radioStations
     if player.filename:
-        # print("="+phrase+"=")
         if phrase!='тихо': core.play_voice_assistant_speech("уже запущено")
         player.pause = False
     else:
@@ -72,14 +68,11 @@ def RadioPlay(core:VACore, phrase: str): # в phrase находится оста
 
     # ----------- set context ------
     core.context_set(RadioContext)
-    # subprocess.Popen(["mpv", "--input-ipc-server={}".format(options["radioIpcSocket"]), options["radioPlay"]])
-    #mpv http://nashe1.hostingradio.ru/nashesongs.mp3
  
 def RadioChange(core:VACore, phrase: str): # в phrase находится остаток фразы после названия скилла,
                                               # если юзер сказал больше
                                               # в этом плагине не используется
     global player
-    # global radioStations
     if not player.filename:
         core.play_voice_assistant_speech("радио не включено")
         return
@@ -124,10 +117,8 @@ def RadioContext(core:VACore, phrase: str): # в phrase находится ос�
     core.context_set(RadioContext)
 
 def RadioStop(core:VACore, phrase: str): # в phrase находится остаток фразы после названия скилла,
-    # print("Команда управления MPV - стоп")
     global player
     global TimerSleep
-    # print (TimerSleep)
     
     if TimerSleep:
         while player.volume > 1:
@@ -146,7 +137,6 @@ def RadioStop(core:VACore, phrase: str): # в phrase находится оста
     if TimerSleep: TimerSleep=False
         
 def RadioPause(core:VACore, phrase: str):
-    # print("Команда управления MPV - пауза")
     global player
     player.pause = not player.pause
 
@@ -154,7 +144,6 @@ def RadioPause(core:VACore, phrase: str):
     core.context_set(RadioContext)
     
 def RadioVolumeChange(core:VACore, phrase: str, level:int):
-    # print("Команда управления MPV - громкость " + str(level))
     global player
     global lastRadioVolumeChange
     lastRadioVolumeChange = level
@@ -175,11 +164,12 @@ def RadioVolumeChange(core:VACore, phrase: str, level:int):
     core.context_set(RadioContext)
     
 def RadioTimerSleep(core:VACore, phrase: str):
-    # print("Выключить радио через 30 минут")
+    # print("Выключить радио через options["TimeSleep"] секунд")
     global player
     global TimerSleep
     options = core.plugin_options(modname)
     TimerSleep = True
+    # print("Уменьшаем громкость в options["TimesToReduce"] раз")
     player.volume = player.volume//options["TimesToReduce"]
     core.play_voice_assistant_speech("выключу радио попозже")
     core.set_timer(options["TimeSleep"],(RadioStop, phrase))
