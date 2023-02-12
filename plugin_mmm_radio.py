@@ -27,7 +27,8 @@ def start(core:VACore):
             ],
             "radioPlay": 0,
             "radioVolume": 100,
-            "TimeSleep": 1800,
+            "TimeSleep": 180,
+            "TimesToReduce": 2, # во сколько раз уменьшить громкость по команде "Спать", 1 - не уменьшать. 
             # "radioIpcSocket": "/tmp/mpvsocket",
         },
 
@@ -57,7 +58,8 @@ def RadioPlay(core:VACore, phrase: str): # в phrase находится оста
     global player
     # global radioStations
     if player.filename:
-        if not mute: core.play_voice_assistant_speech("уже запущено")
+        # print("="+phrase+"=")
+        if phrase!='тихо': core.play_voice_assistant_speech("уже запущено")
         player.pause = False
     else:
         # core.play_voice_assistant_speech("включаю")
@@ -174,10 +176,12 @@ def RadioVolumeChange(core:VACore, phrase: str, level:int):
     
 def RadioTimerSleep(core:VACore, phrase: str):
     # print("Выключить радио через 30 минут")
+    global player
     global TimerSleep
     options = core.plugin_options(modname)
     TimerSleep = True
+    player.volume = player.volume//options["TimesToReduce"]
     core.play_voice_assistant_speech("выключу радио попозже")
-    core.set_timer(options["TimeSleep"],(TimeSleep, phrase))
+    core.set_timer(options["TimeSleep"],(RadioStop, phrase))
 
     
