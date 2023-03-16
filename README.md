@@ -8,8 +8,4 @@
 
 `pip install mpv`
 
-## plugin_mmm_ReadRSS.py - чтение новостей из RSS ленты
-  
-Для работы потребуется:
 
-`pip install feedparser`
