@@ -9,3 +9,4 @@
 `pip install mpv`
 
 
+## plugin_mmm_wttrin.py - прогноз погоды с сайта wttr.in
