@@ -5,8 +5,7 @@
 ## plugin_mmm_radio.py - воспроизведение интернет радиостанций
   
 Для работы потребуется:
-
-`pip install mpv`
-
+    `pip install mpv`
+---
 
 ## plugin_mmm_wttrin.py - прогноз погоды с сайта wttr.in
