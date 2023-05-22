@@ -3,8 +3,7 @@
 Плагины для голосового помощника Ирина (https://github.com/janvarev/Irene-Voice-Assistant)
 
 ## plugin_mmm_radio.py - воспроизведение интернет радиостанций
-  
-###Для работы потребуется:
+Для работы потребуется:
 `pip install mpv`
 
 ---
