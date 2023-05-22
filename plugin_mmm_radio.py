@@ -90,24 +90,24 @@ def RadioContext(core:VACore, phrase: str): # в phrase находится ос�
                                               # в этом плагине не используется
     # выходим из контекста
     if phrase in ("хорошо", "оставь", "стать", "оставить"):
-        core.context_clear_play()
+        #core.context_clear_play()
         core.context_clear()
         return
         
     # команды в контексте модуля радио
-    if phrase in ("другое", "поменяй"): core.accept(); RadioChange(core, phrase)
-    elif phrase=="пауза": core.accept(); RadioPause(core, phrase)
-    elif phrase=="выключи": core.accept(); RadioStop(core, phrase)
+    if phrase in ("другое", "поменяй"): RadioChange(core, phrase)
+    elif phrase=="пауза": RadioPause(core, phrase)
+    elif phrase=="выключи": RadioStop(core, phrase)
     
-    elif phrase=="тише": core.accept(); RadioVolumeChange(core, phrase, -15)
-    elif phrase=="громче": core.accept(); RadioVolumeChange(core, phrase, 15)
-    elif phrase=="чуть тише": core.accept(); RadioVolumeChange(core, phrase, -5)
-    elif phrase=="чуть громче": core.accept(); RadioVolumeChange(core, phrase, 5)
-    elif phrase=="сильно тише": core.accept(); RadioVolumeChange(core, phrase, -35)
-    elif phrase=="сильно громче": core.accept(); RadioVolumeChange(core, phrase, 35)
-    elif phrase in ("потом выключи", "спать"): core.accept(); RadioTimerSleep(core, phrase)
+    elif phrase=="тише": RadioVolumeChange(core, phrase, -15)
+    elif phrase=="громче": RadioVolumeChange(core, phrase, 15)
+    elif phrase=="чуть тише": RadioVolumeChange(core, phrase, -5)
+    elif phrase=="чуть громче": RadioVolumeChange(core, phrase, 5)
+    elif phrase=="сильно тише": RadioVolumeChange(core, phrase, -35)
+    elif phrase=="сильно громче": RadioVolumeChange(core, phrase, 35)
+    elif phrase in ("потом выключи", "спать"): RadioTimerSleep(core, phrase)
     elif phrase=="ещё": 
-        core.accept() 
+        #core.accept() 
         global lastRadioVolumeChange
         RadioVolumeChange(core, phrase, lastRadioVolumeChange)
    
